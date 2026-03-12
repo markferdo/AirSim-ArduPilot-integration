@@ -3,5 +3,6 @@
 - [Installation](docs/Installation.md)
 - [Workflow](docs/workflow.md)
 - [Commands](docs/commands.md)
+- [User Manual](docs/manual.md)
 
 
