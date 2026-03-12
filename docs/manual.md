@@ -32,7 +32,7 @@ commands
 
 https://ardupilot.org/copter/docs/mission-command-list.html
 
-
+~~~
 STABILIZE>
 STABILIZE> mode guided
 STABILIZE> Got COMMAND_ACK: DO_SET_MODE: ACCEPTED
@@ -50,9 +50,11 @@ Got COMMAND_ACK: NAV_TAKEOFF: ACCEPTED
 height 15
 height 25
 height 36
+~~~
 
 ![unreal](images/takeoff.png)
 
+~~~
 GUIDED> mode land
 GUIDED> Got COMMAND_ACK: DO_SET_MODE: ACCEPTED
 LAND> Mode LAND
@@ -62,3 +64,4 @@ height 5
 AP: Disarming motors
 DISARMED
 LAND>
+~~~
