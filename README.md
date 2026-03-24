@@ -100,4 +100,6 @@ The ideal result should be a warning at the end without errors, indicating a suc
 
 12. Press the large play button on the upper bar. It will ask you if you want to use the car simulation which you need to press no  
 
-13. Once done, the drone will appear on the test screen  
+13. Once done, the drone will appear on the test screen
+
+    ![Drone Demo](images/OutputProof.gif)
