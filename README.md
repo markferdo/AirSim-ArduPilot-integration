@@ -77,7 +77,9 @@ Since we are using Visual studio community, the project requires atleast one C++
 6. On this step, refer to the steps given in the official Microsoft setup guide for setting up Unreal Environment for Airsim. Start from step 5. This is not a blind just-do-it guide since the user needs to modify some steps to make the results fall in specifically to his/her setup:  
 https://microsoft.github.io/AirSim/unreal_custenv/
 
-7. Copy paste the script of the step 6 and paste it on your .uproject file and modify it to your project preference. This involves changing the project name  
+7. Copy paste the script of the step 6 and paste it on your .uproject file and modify it to your project preference. This involves changing the project name
+
+   ![Step 7](images/uproject%20file%20mod%20image.jpg)
 
 In the step 8 of the guide, generate visual studio project files wont work since it falls back into the same path error encountered on the generate block.uproject airsim setup.
 
