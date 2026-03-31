@@ -105,3 +105,282 @@ The ideal result should be a warning at the end without errors, indicating a suc
 13. Once done, the drone will appear on the test screen
 
     ![Drone Demo](images/OutputProof.gif)
+
+# AirSim + ArduPilot SITL Setup (WSL2) — What Worked For Me
+
+This is a personal step-by-step guide on how I got a working pipeline between:
+
+- WSL2 Ubuntu (ArduPilot SITL)  
+- MAVProxy  
+- AirSim running on Windows (UE 4.27.2)  
+
+This is not a perfect or official guide — just what worked for me after troubleshooting multiple issues.
+
+---
+
+## Main Issues I Faced
+
+- Figuring out LocalHostIp vs UdpIp  
+- Commands refusing connection (`tcp 127.0.0.1 error 111`)  
+- `sim_vehicle.py` not working properly with AirSim  
+
+---
+
+## 1. Dependencies Installation
+
+All installs were done inside WSL Ubuntu, not Windows.
+
+I did not use a virtual environment. Everything was installed under `/home/<user>`.
+
+Important: after installing each dependency, I tested them individually to confirm they actually worked.
+
+---
+
+### 1.1 WSL2 Ubuntu
+
+Make sure WSL is installed and Ubuntu opens properly.
+
+Check in PowerShell:
+```bash
+wsl --status
+```
+
+Inside Ubuntu:
+```bash
+uname -a
+```
+
+---
+
+### 1.2 Python
+
+Check version:
+```bash
+python3 --version
+```
+
+Check pip:
+```bash
+pip3 --version
+```
+
+If missing:
+```bash
+sudo apt update
+sudo apt install python3 python3-pip -y
+```
+
+---
+
+### 1.3 MAVProxy and Related Packages
+
+Install:
+```bash
+pip install MAVProxy
+```
+
+This installs:
+- pymavlink  
+- pyserial  
+- other required dependencies  
+
+Verify installation:
+```bash
+mavproxy.py --version
+```
+
+Check pymavlink:
+```bash
+python3 -c "import pymavlink; print('pymavlink OK')"
+```
+
+Check serial:
+```bash
+python3 -c "import serial; print('pyserial OK')"
+```
+
+---
+
+### 1.4 ArduPilot
+
+Clone:
+```bash
+git clone https://github.com/ArduPilot/ardupilot.git
+cd ardupilot
+```
+
+Install dependencies:
+```bash
+Tools/environment_install/install-prereqs-ubuntu.sh -y
+. ~/.profile
+```
+
+Verify:
+```bash
+sim_vehicle.py --help
+```
+
+Build SITL:
+```bash
+./waf configure --board sitl
+./waf copter
+```
+
+Check if build worked:
+```bash
+ls build/sitl/bin/
+```
+
+You should see `arducopter`.
+
+---
+
+## 2. Setup AirSim + ArduPilot Connection
+
+I followed the concept from ArduPilot docs, but had to adjust some parts to make it actually work.
+
+Main issue here was figuring out correct IP addresses.
+
+---
+
+### 2.1 Fix WSL Networking
+
+Edit your profile:
+```bash
+nano ~/.profile
+```
+
+Add:
+```bash
+export WSL_HOST_IP=$(ip route | awk '/default/ {print $3}')
+export DISPLAY=$WSL_HOST_IP:0
+```
+
+Save and restart WSL.
+
+Check:
+```bash
+echo $WSL_HOST_IP
+```
+
+---
+
+### 2.2 Get Your UDP IP
+
+Inside WSL:
+```bash
+ip addr show eth0
+```
+
+Look for something like:
+```
+inet 172.xx.xxx.xxx
+```
+
+That is your UDP IP.
+
+---
+
+### 2.3 Configure AirSim settings.json
+
+Set:
+```json
+"LocalHostIp": "0.0.0.0",
+"UdpIp": "<your UDP IP>"
+```
+
+---
+
+## 3. Running the Pipeline (Important Part)
+
+`sim_vehicle.py` DID NOT work for me with AirSim.
+
+So I ran things manually.
+
+---
+
+### 3.1 Open TWO WSL terminals
+
+---
+
+### Terminal 1 — Run ArduCopter
+
+```bash
+/home/<user>/ardupilot/build/sitl/bin/arducopter \
+  --model airsim-copter \
+  --speedup 1 \
+  --slave 0 \
+  --sim-address=<WSL_HOST_IP> \
+  --defaults /home/<user>/ardupilot/Tools/autotest/default_params/copter.parm,/home/<user>/ardupilot/Tools/autotest/default_params/airsim-quadX.parm \
+  -I0
+```
+
+---
+
+### Terminal 2 — Run MAVProxy
+
+```bash
+mavproxy.py \
+  --retries 5 \
+  --out <WSL_HOST_IP>:14550 \
+  --master tcp:127.0.0.1:5760 \
+  --sitl 127.0.0.1:5501 \
+  --map \
+  --console
+```
+
+---
+
+### Notes
+
+- `<WSL_HOST_IP>` comes from:
+```bash
+echo $WSL_HOST_IP
+```
+
+- You can also confirm from Windows:
+```bash
+ipconfig
+```
+
+Look for:
+```
+vEthernet (WSL)
+```
+
+---
+
+## 4. Running AirSim (Unreal Engine)
+
+1. Open your `Blocks.uproject`  
+2. Press **Play**
+
+---
+
+## 5. How I Knew It Worked
+
+- MAVProxy shows:
+```
+link 1 down → link 1 up
+```
+
+- No freezing in Unreal Engine  
+- Drone responds to commands  
+- No more TCP connection errors  
+
+---
+
+## Final Notes
+
+- The biggest blocker for me was **networking between WSL and Windows**
+- `sim_vehicle.py` looked easier but didn’t work reliably in my setup
+- Running ArduPilot + MAVProxy separately fixed everything
+
+If something doesn’t work, double check:
+- IP addresses  
+- Ports  
+- That each component runs individually first  
+
+---
+
+Based on my original notes: :contentReference[oaicite:0]{index=0}
