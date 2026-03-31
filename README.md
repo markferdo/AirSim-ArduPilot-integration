@@ -237,7 +237,9 @@ You should see `arducopter`.
 
 ## 2. Setup AirSim + ArduPilot Connection
 
-I followed the concept from ArduPilot docs, but had to adjust some parts to make it actually work.
+I followed the concept from ArduPilot docs, but had to adjust some parts to make it actually work.  
+
+https://ardupilot.org/dev/docs/sitl-with-airsim.html#using-airsim-with-ardupilot:~:text=of%20the%20page.-,Using%20AirSim%20with%20ArduPilot,%C2%B6,-Make%20sure%20that
 
 Main issue here was figuring out correct IP addresses.
 
@@ -277,7 +279,7 @@ Look for something like:
 inet 172.xx.xxx.xxx
 ```
 
-That is your UDP IP.
+That is your UdpIp.
 
 ---
 
@@ -291,11 +293,13 @@ Set:
 
 ---
 
-## 3. Running the Pipeline (Important Part)
+## 3. Running the Pipeline (Important Part) 
+
+https://discuss.ardupilot.org/t/gsoc-2019-airsim-simulator-support-for-ardupilot-sitl-part-ii/46395/13
 
 `sim_vehicle.py` DID NOT work for me with AirSim.
 
-So I ran things manually.
+So I ran things manually in lowlevel binary commands.
 
 ---
 
