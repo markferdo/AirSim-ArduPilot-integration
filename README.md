@@ -365,7 +365,7 @@ vEthernet (WSL)
 
 - MAVProxy shows:
 ```
-link 1 down → link 1 up
+ Detected vehicle 1:1 on link 0
 ```
 
 - No freezing in Unreal Engine  
