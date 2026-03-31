@@ -386,5 +386,3 @@ If something doesn’t work, double check:
 - That each component runs individually first  
 
 ---
-
-Based on my original notes: :contentReference[oaicite:0]{index=0}
