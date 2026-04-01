@@ -220,17 +220,6 @@ Verify:
 sim_vehicle.py --help
 ```
 
-Build SITL:
-```bash
-./waf configure --board sitl
-./waf copter
-```
-
-Check if build worked:
-```bash
-ls build/sitl/bin/
-```
-
 You should see `arducopter`.
 
 ---
@@ -273,13 +262,6 @@ Inside WSL:
 ```bash
 ip addr show eth0
 ```
-
-Look for something like:
-```
-inet 172.xx.xxx.xxx
-```
-
-That is your UdpIp.
 
 ---
 
