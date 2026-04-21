@@ -4,7 +4,7 @@
 
 **Airsim**: Simulation bridge between Unreal Engine and the drone controller(ardupilot).
 
-**Ardupilot**: ArduPilot is the autopilot software that controls the drone.
+**Ardupilot**: ArduPilot is the software that controls the drone.
 
 **Mavlink**: Communication protocol between systems.
 
