@@ -11,7 +11,7 @@ sudo apt install joystick
 - mode load joystick
 
 
-Run this ro open the mavpoxy terminal
+Run this to open the mavpoxy terminal
 ~~~
 mavproxy.py --master=127.0.0.1:14550 --console --map
 ~~~
@@ -105,7 +105,7 @@ ALT_HOLD> arm throttle -> arming the motors
 ALT_HOLD> arm throttle force -> run this if arm throttle doesn't work
 ~~~
 
-Note: arm throttle force this command disable the safety check. Not recomme for real drone
+Note: arm throttle force this command disable the safety check. Not recommend for real drone
 
 Now all done. You can control the drone with the controller.
 
