@@ -158,6 +158,8 @@ from the airsim/..../blocks folder
 4. navigate to /home/mark/ardupilot/ArduCopter and type this sim_vehicle.py -v ArduCopter -f airsim-copter --console --map and enter.
 5. Now unreal drone should be fine
 
-## Intalling airsim (pip install thing)
+## Intalling airsim
+
+https://microsoft.github.io/AirSim/build_linux/
 
 
