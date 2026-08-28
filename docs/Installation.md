@@ -160,26 +160,4 @@ from the airsim/..../blocks folder
 
 ## Intalling airsim (pip install thing)
 
-if you get this
 
-41d69080176539b76b10/airsim/utils.py", line 1, in <module>
-          import numpy as np #pip install numpy
-          ^^^^^^^^^^^^^^^^^^
-      ModuleNotFoundError: No module named 'numpy'               [end of output]
-
-  note: This error originates from a subprocess, and is likely not a problem with pip.
-error: subprocess-exited-with-error
-
-× Getting requirements to build wheel did not run successfully.                                                       │ exit code: 1
-╰─> See above for output.
-
-note: This error originates from a subprocess, and is likely not a problem with pip.
-
-
-~~~
-pip install --upgrade pip setuptools wheel
-pip install numpy
-pip install backports.ssl_match_hostname
-pip install msgpack-rpc-python
-pip install --no-build-isolation airsim
-~~~
